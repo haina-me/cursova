@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Director</title>
+
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+        :root {
+            --bg: #0b0b0b;
+            --text: #fff;
+            --muted: rgba(255, 255, 255, .7);
+
+            --glass: rgba(255, 255, 255, .08);
+            --panel: rgba(255, 255, 255, .10);
+
+            --border: rgba(255, 255, 255, .18);
+            --border2: rgba(255, 255, 255, .14);
+
+            --r: 18px;
+            --shadow: 0 18px 50px rgba(0, 0, 0, .55);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 28px 14px;
+        }
+
+        .wrap {
+            width: min(760px, 100%);
+        }
+
+        .header {
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            background: var(--glass);
+            box-shadow: var(--shadow);
+            margin-bottom: 12px;
+        }
+
+        .header h1 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .header p {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        /* Tabs container */
+        .tabs {
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            background: var(--glass);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        /* Hide radios */
+        .tabs>input {
+            display: none;
+        }
+
+        .tab-head {
+            display: flex;
+            gap: 10px;
+            padding: 12px 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, .12);
+        }
+
+        /* Curtain buttons */
+        .tab {
+            cursor: pointer;
+            user-select: none;
+            padding: 12px 16px;
+            border-radius: 16px 16px 10px 10px;
+            border: 1px solid rgba(255, 255, 255, .18);
+            background: rgba(255, 255, 255, .06);
+            color: rgba(255, 255, 255, .78);
+            font-size: 13px;
+            font-weight: 600;
+            transform: translateY(6px);
+            transition: transform .18s ease, background .18s ease, color .18s ease, border-color .18s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* subtle “folds” */
+        .tab::before {
+            content: "";
+            position: absolute;
+            inset: -18px -18px 0 -18px;
+            background: linear-gradient(90deg,
+                    rgba(255, 255, 255, .18) 0%,
+                    rgba(255, 255, 255, .05) 14%,
+                    rgba(255, 255, 255, .15) 28%,
+                    rgba(255, 255, 255, .05) 42%,
+                    rgba(255, 255, 255, .15) 56%,
+                    rgba(255, 255, 255, .05) 70%,
+                    rgba(255, 255, 255, .15) 84%,
+                    rgba(255, 255, 255, .18) 100%);
+            opacity: .10;
+            pointer-events: none;
+        }
+
+        /* Active tab (connected with underlay) */
+        #tab-stock:checked~.tab-head label[for="tab-stock"],
+        #tab-bouquets:checked~.tab-head label[for="tab-bouquets"] {
+            transform: translateY(0);
+            background: rgba(255, 255, 255, .12);
+            color: rgba(255, 255, 255, .98);
+            border-color: rgba(255, 255, 255, .30);
+            border-bottom-color: transparent;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        /* UNDERLAY (the “background” that goes down from the button) */
+        .underlay {
+            margin: 0 12px 12px;
+            border: 1px solid var(--border2);
+            border-top: none;
+            background: linear-gradient(180deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, .07));
+            box-shadow: 0 18px 40px rgba(0, 0, 0, .35);
+            overflow: hidden;
+
+            max-height: 0;
+            /* hidden by default */
+            transition: max-height .26s ease;
+        }
+
+        /* Open underlay when any tab is selected */
+        #tab-stock:checked~.underlay,
+        #tab-bouquets:checked~.underlay {
+            max-height: 320px;
+            /* enough for content */
+        }
+
+        /* Change top corner depending on which button is active (looks like it “starts” from that tab) */
+        #tab-stock:checked~.underlay {
+            border-radius: 0 16px 16px 16px;
+        }
+
+        #tab-bouquets:checked~.underlay {
+            border-radius: 16px 0 16px 16px;
+        }
+
+        /* panes */
+        .pane {
+            display: none;
+            padding: 18px;
+            color: rgba(255, 255, 255, .92);
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        /* show + animate pane on click */
+        #tab-stock:checked~.underlay .pane-stock {
+            display: block;
+            animation: drop .22s ease;
+        }
+
+        #tab-bouquets:checked~.underlay .pane-bouquets {
+            display: block;
+            animation: drop .22s ease;
+        }
+
+        @keyframes drop {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hint {
+            margin-top: 8px;
+            color: rgba(255, 255, 255, .65);
+            font-size: 12px;
+        }
+
+        @media (max-width: 520px) {
+            .tab {
+                padding: 12px 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="header">
+            <h1>Сторінка директора</h1>
+            <p>Натискаєш кнопку — від неї “розкривається” підложка під контент</p>
+        </div>
+
+        <section class="tabs">
+            <!-- Якщо хочеш, щоб “Склад” був відкритий одразу: додай checked сюди -->
+            <input type="radio" name="tabs" id="tab-stock" />
+            <input type="radio" name="tabs" id="tab-bouquets" />
+
+            <div class="tab-head">
+                <label class="tab" for="tab-stock">Склад</label>
+                <label class="tab" for="tab-bouquets">Букети</label>
+            </div>
+
+            <div class="underlay">
+                <div class="pane pane-stock">
+                    Тут буде <b>склад квітів</b>.
+                    <div class="hint">Поки заглушка — але підложка з’являється від кнопки вниз.</div>
+                </div>
+
+                <div class="pane pane-bouquets">
+                    Тут буде розділ <b>букети</b>.
+                    <div class="hint">Поки заглушка — але підложка з’являється від кнопки вниз.</div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>

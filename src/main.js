@@ -1,36 +1,41 @@
-import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
 import { auth, db } from "./config/firebase-config.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
-import { doc, getDoc } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 
-const form = document.querySelector('form');
 
-form.addEventListener('submit', (event) => {
+const loginForm = document.querySelector('.card');
 
-    event.preventDefault();
-    const email = form.elements['email'].value;
-    const password = form.elements['password'].value;
+if (loginForm) {
+    loginForm.addEventListener('submit', (event) => {
+        event.preventDefault();
 
-    signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in 
-            const user = userCredential.user;
 
-            onAuthStateChanged(auth, async (user) => {
+        const email = loginForm.elements['email'].value;
+        const password = loginForm.elements['password'].value;
 
-                const role = snap.data().role;
-                console.log("ROLE =", role);
+        signInWithEmailAndPassword(auth, email, password)
+            .then(() => {
+                console.log("Успішний вхід!");
+            })
+            .catch((error) => alert("Помилка: " + error.message));
+    });
+}
 
-                if (role === "director") window.location.href = "director.html";
-            });
 
-            onAuthStateChanged
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        console.log("Користувач авторизований:", user.uid);
+        const snap = await getDoc(doc(db, "users", user.uid));
 
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-        });
-
+        if (snap.exists()) {
+            const data = snap.data();
+            if (data.role === "director") {
+                window.location.replace("/director.html");
+            } else {
+                alert("Ваша роль: " + data.role + ". Доступ до панелі директора заборонено.");
+            }
+        } else {
+            console.error("Документ користувача не знайдено в Firestore");
+        }
+    }
 });
-

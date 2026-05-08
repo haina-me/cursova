@@ -17,6 +17,68 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        .add-flower-form {
+            margin-top: 20px;
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            position: relative;
+            z-index: 10;
+            pointer-events: all !important;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            background: var(--glass);
+            padding: 15px;
+        }
+
+        .add-flower-form h3 {
+            font-size: 14px;
+            margin-bottom: 0;
+            color: var(--text);
+            white-space: nowrap;
+        }
+
+        .add-flower-form input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 12px;
+            color: #fff;
+            font-size: 13px;
+            outline: none;
+            transition: 0.2s;
+            width: 100%;
+            /* Щоб вони рівномірно заповнювали місце */
+        }
+
+        .add-flower-form input:focus {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .add-flower-form .btn {
+            background: var(--text);
+            /* Біла кнопка */
+            color: #000;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+
+        .add-flower-form .btn:hover {
+            opacity: 0.8;
+            transform: translateY(-1px);
+        }
+
+        .add-flower-form .btn:active {
+            transform: translateY(0);
+        }
+
         .stock-header-right,
         .stock-item-right {
             display: flex;
@@ -167,6 +229,7 @@
             background: linear-gradient(180deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, .07));
             box-shadow: 0 18px 40px rgba(0, 0, 0, .35);
             overflow: hidden;
+            pointer-events: none;
 
             max-height: 0;
             /* hidden by default */
@@ -239,7 +302,6 @@
     <div class="wrap">
         <div class="header">
             <h1>Сторінка директора</h1>
-            <p>Натискаєш кнопку — від неї “розкривається” підложка під контент</p>
         </div>
 
         <section class="tabs">
@@ -268,15 +330,20 @@
 
                     <div id="stock-list" class="stock-list">
                     </div>
+                    <form id="flower-form" class="add-flower-form">
+                        <h3>Додати нову квітку</h3>
+                        <input type="text" id="new-flower-name" placeholder="Назва" required>
+                        <input type="text" id="new-flower-size" placeholder="Розмір" required>
+                        <input type="number" id="new-flower-count" placeholder="Кількість" required>
+                        <button type="submit" id="add-flower-btn" class="btn">Додати на склад</button>
+                    </form>
+                    <div class="pane pane-bouquets">
+                        Тут буде розділ <b>букети</b>.
+                    </div>
                 </div>
-
-                <div class="pane pane-bouquets">
-                    Тут буде розділ <b>букети</b>.
-                    <div class="hint">Поки заглушка — але підложка з’являється від кнопки вниз.</div>
-                </div>
-            </div>
         </section>
     </div>
+    <script type="module" src="./src/main.js"></script>
 </body>
 
 </html>

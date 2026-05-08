@@ -9,6 +9,33 @@
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
+        .stock-header,
+        .stock-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stock-header-right,
+        .stock-item-right {
+            display: flex;
+            gap: 40px;
+            /* Відстань між розміром та кількістю */
+            min-width: 150px;
+            justify-content: flex-end;
+        }
+
+        .search-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--muted);
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
         :root {
             --bg: #0b0b0b;
             --text: #fff;
@@ -227,8 +254,20 @@
 
             <div class="underlay">
                 <div class="pane pane-stock">
-                    Тут буде <b>склад квітів</b>.
-                    <div class="hint">Поки заглушка — але підложка з’являється від кнопки вниз.</div>
+                    <div class="stock-controls">
+                        <input type="text" id="flower-search" placeholder="Пошук квітки..." class="search-input">
+                    </div>
+
+                    <div class="stock-header">
+                        <span>Назва квітки</span>
+                        <div class="stock-header-right">
+                            <span>Розмір</span>
+                            <span>Кількість</span>
+                        </div>
+                    </div>
+
+                    <div id="stock-list" class="stock-list">
+                    </div>
                 </div>
 
                 <div class="pane pane-bouquets">

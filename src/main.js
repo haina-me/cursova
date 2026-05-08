@@ -39,3 +39,11 @@ onAuthStateChanged(auth, async (user) => {
         }
     }
 });
+
+import { db } from "./config/firebase-config.js";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
+
+const stockListContainer = document.querySelector('#stock-list');
+const searchInput = document.querySelector('#flower-search');
+let searchAbortController = null;
+

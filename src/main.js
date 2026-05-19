@@ -1,4 +1,6 @@
 import { loginUser, getUserData, onAuthChange } from "./services/authService.js";
+import { FlowerSearchReactor } from './services/flowerService.js';
+
 
 const loginForm = document.querySelector('.card');
 
@@ -105,3 +107,22 @@ if (flowerForm) {
 }
 
 renderStock();
+
+
+
+// Реактор для додавання квітки на склад
+
+const searchInput = document.querySelector('#flower-search');
+const stockListContainer = document.querySelector('#stock-list');
+
+const reactor = new FlowerSearchReactor();
+
+if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+        reactor.search(e.target.value);
+    });
+}
+
+reactor.on('search_completed', (flowers) => {
+    console.log(` ${flowers.length} квіток запит "${searchInput.value}"`);
+});

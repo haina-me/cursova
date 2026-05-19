@@ -271,6 +271,13 @@
             border-radius: 16px 0 16px 16px;
         }
 
+        #flower-search {
+            position: relative;
+            z-index: 10;
+            cursor: text;
+            pointer-events: auto !important;
+        }
+
         /* panes */
         .pane {
             display: none;
@@ -336,7 +343,8 @@
             <div class="underlay">
                 <div class="pane pane-stock">
                     <div class="stock-controls">
-                        <input type="text" id="flower-search" placeholder="Пошук квітки..." class="search-input">
+                        <input type="text" id="flower-search" placeholder="Пошук квітки...">
+
                     </div>
 
                     <div class="stock-header">

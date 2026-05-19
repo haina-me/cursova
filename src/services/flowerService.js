@@ -36,6 +36,7 @@ export const addFlower = async (flowerData) => {
         throw error;
     }
 };
+
 // Реактор для пошуку квіток зі складу
 export class FlowerSearchReactor {
     constructor() {
@@ -67,10 +68,12 @@ export class FlowerSearchReactor {
     }
 
     search(text) {
+
         clearTimeout(this.searchTimeout);
 
         this.searchTimeout = setTimeout(async () => {
             const query = text.trim().toLowerCase();
+
             const iterator = getStockIterator();
             const results = [];
 
@@ -78,12 +81,13 @@ export class FlowerSearchReactor {
                 const { value: flower, done } = await iterator.next();
                 if (done) break;
 
-                if (!query || (flower.name && flower.name.toLowerCase().includes(query))) {
+                if (flower.name && flower.name.toLowerCase().includes(query)) {
                     results.push(flower);
                 }
             }
 
             this.emit('search_completed', results);
+
         }, 400);
     }
 }

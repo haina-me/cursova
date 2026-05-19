@@ -113,7 +113,6 @@ renderStock();
 // Реактор для додавання квітки на склад
 
 const searchInput = document.querySelector('#flower-search');
-const stockListContainer = document.querySelector('#stock-list');
 
 const reactor = new FlowerSearchReactor();
 
@@ -124,5 +123,23 @@ if (searchInput) {
 }
 
 reactor.on('search_completed', (flowers) => {
-    console.log(` ${flowers.length} квіток запит "${searchInput.value}"`);
+    if (!stockListContainer) return;
+
+    stockListContainer.innerHTML = '';
+
+    flowers.forEach(flower => {
+        const flowerRow = `
+            <div class="stock-item">
+                <span class="flower-name col-name">${flower.name}</span>
+                
+                <div class="stock-item-right">
+                    <span class="flower-size col-size">${flower.size || '—'}</span>
+                    
+                    <span class="flower-qty col-qty"><b>${flower.count || 0}</b> шт.</span>
+                </div>
+            </div>
+        `;
+        stockListContainer.insertAdjacentHTML('beforeend', flowerRow);
+    });
+
 });

@@ -13,8 +13,9 @@
         .stock-item {
             display: flex;
             justify-content: space-between;
-            padding: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            align-items: center;
+            padding: 12px 10px;
+            color: #fff;
         }
 
         .stock-list {
@@ -36,8 +37,6 @@
         }
 
         .add-flower-form {
-            border: 1px solid var(--border);
-            border-radius: var(--r);
             position: relative;
             z-index: 10;
             pointer-events: all !important;
@@ -45,8 +44,12 @@
             gap: 10px;
             align-items: center;
             background: var(--glass);
-            padding: 15px;
-            margin-top: 10px;
+            background-color: #1e1e1e;
+            /* Ще темніший фон для контрасту */
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            margin-top: 30px;
         }
 
         .add-flower-form h3 {
@@ -103,6 +106,72 @@
             /* Відстань між розміром та кількістю */
             min-width: 150px;
             justify-content: flex-end;
+        }
+
+        .stock-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 12px;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #555;
+            margin-bottom: 15px;
+            color: #aaaaaa;
+            text-transform: uppercase;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 12px 0;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            /* Відступ між полями */
+
+            background-color: #2a2a2a;
+            /* Темний фон */
+            border: 1px solid #444;
+            /* Темна рамка */
+            border-radius: 8px;
+            /* Скруглені кути */
+
+            color: #ffffff;
+            font-size: 14px;
+            font-family: inherit;
+
+            transition: all 0.3s ease;
+            /* Плавна анімація */
+            box-sizing: border-box;
+            /* Щоб padding не розширював поле */
+        }
+
+        .input-field::placeholder {
+            color: #888888;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #777;
+            /* Трохи світліша рамка */
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.05);
+            /* Легке світіння */
+            background-color: #333333;
+        }
+
+        .stock-header>div:nth-child(1) {
+            flex: 2;
+            text-align: left;
+        }
+
+        .stock-header>div:nth-child(2) {
+            flex: 1;
+            text-align: center;
+        }
+
+        .stock-header>div:nth-child(3) {
+            flex: 1;
+            text-align: right;
         }
 
         .search-input {
@@ -208,6 +277,25 @@
             overflow: hidden;
         }
 
+        .col-name {
+            flex: 2;
+            text-align: left;
+        }
+
+        /* Ширша колонка, вліво */
+        .col-size {
+            flex: 1;
+            text-align: center;
+        }
+
+        /* Вужча колонка, по центру */
+        .col-qty {
+            flex: 1;
+            text-align: right;
+        }
+
+        /* Вужча колонка, вправо */
+
         /* subtle “folds” */
         .tab::before {
             content: "";
@@ -267,6 +355,24 @@
             min-height: 320px;
         }
 
+        #add-flower-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #fff;
+            /* Біла кнопка */
+            color: #000;
+            /* Чорний текст */
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #add-flower-btn:hover {
+            background-color: #e0e0e0;
+        }
+
         #tab-bouquets:checked~.underlay {
             border-radius: 16px 0 16px 16px;
         }
@@ -276,6 +382,33 @@
             z-index: 10;
             cursor: text;
             pointer-events: auto !important;
+            width: 100%;
+            max-width: 400px;
+            padding: 12px 16px;
+            margin-bottom: 24px;
+
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+
+            color: #ffffff;
+            font-size: 14px;
+            font-family: inherit;
+
+            transition: all 0.3s ease;
+        }
+
+        #flower-search::placeholder {
+            color: #888888;
+        }
+
+        #flower-search:focus {
+            outline: none;
+            border-color: #888;
+            /* Рамка стає світлішою */
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+            /* Легке світіння */
+            background-color: #333333;
         }
 
         /* panes */

@@ -77,6 +77,35 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
+        .history-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #2a2a2a;
+            color: #fff;
+            border: 1px solid #444;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative !important;
+            z-index: 100 !important;
+            pointer-events: auto !important;
+            /* Плавна анімація всіх змін */
+        }
+
+        .history-btn:hover {
+            background-color: #444444 !important;
+            border-color: #666 !important;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5) !important;
+        }
+
+        .history-btn:active {
+            background-color: #1a1a1a;
+            /* Кнопка "продавлюється" (стає темнішою) */
+            transform: translateY(1px);
+            /* Візуально опускається на 1 піксель */
+        }
+
         .add-flower-form .btn {
             background: var(--text);
             color: #000;
@@ -464,7 +493,6 @@
         </div>
 
         <section class="tabs">
-            <!-- Якщо хочеш, щоб “Склад” був відкритий одразу: додай checked сюди -->
             <input type="radio" name="tabs" id="tab-stock" />
             <input type="radio" name="tabs" id="tab-bouquets" />
 
@@ -497,10 +525,18 @@
                         <input type="number" id="new-flower-count" placeholder="Кількість" required>
                         <button type="submit" id="add-flower-btn" class="btn">Додати на склад</button>
                     </form>
+                    <div class="history-section"
+                        style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #333;">
+                        <button id="view-history-btn" class="history-btn">
+                            Переглянути історію змін
+                        </button>
+                    </div>
+
                     <div class="pane pane-bouquets">
                         Тут буде розділ <b>букети</b>.
                     </div>
                 </div>
+
         </section>
     </div>
     <script type="module" src="./src/main.js"></script>

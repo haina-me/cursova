@@ -343,6 +343,13 @@
             pointer-events: none;
         }
 
+        .history-message {
+            color: #888888;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+        }
+
         /* Active tab (connected with underlay) */
         #tab-stock:checked~.tab-head label[for="tab-stock"],
         #tab-bouquets:checked~.tab-head label[for="tab-bouquets"] {
@@ -530,6 +537,7 @@
                         <button id="view-history-btn" class="history-btn">
                             Переглянути історію змін
                         </button>
+                        <div id="history-container" class="history-container" style="display: none;"></div>
                     </div>
 
                     <div class="pane pane-bouquets">

@@ -1,4 +1,5 @@
-// services/security.js
+
+//проксі 
 import { db } from "../config/firebase-config.js";
 import { collection, addDoc } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
@@ -55,4 +56,23 @@ export function createSecureApi(apiMethods, getCurrentUser) {
             return target[property];
         }
     });
+}
+
+//декоратор кешування
+
+export function withCache(fn) {
+    const cache = new Map();
+
+    return async function (...args) {
+        const key = JSON.stringify(args);
+
+        if (cache.has(key)) {
+            return cache.get(key);
+        }
+
+        const result = await fn.apply(this, args);
+
+        cache.set(key, result);
+        return result;
+    };
 }

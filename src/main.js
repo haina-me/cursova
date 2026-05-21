@@ -4,6 +4,7 @@ import { createSecureApi } from "./services/security.js";
 import { getStockIterator, addFlower } from "./services/flowerService.js";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import { db } from "./config/firebase-config.js";
+import { withCache } from "./services/security.js";
 
 let activeUser = null;
 const loginForm = document.querySelector('.card');
@@ -90,6 +91,7 @@ async function addFlowerToFirebase() {
     }
 
     try {
+
         await secureApi.addFlower({ name, size, count });
 
         alert(`Квітку "${name}" додано`);
@@ -153,6 +155,18 @@ reactor.on('search_completed', (flowers) => {
 });
 
 //історія змін
+//декоратор
+async function fetchHistoryFromFirebase() {
+    const snapshot = await getDocs(collection(db, "flower_history"));
+    if (snapshot.empty) return [];
+
+    const historyData = [];
+    snapshot.forEach(doc => historyData.push(doc.data()));
+
+    return historyData.sort((a, b) => new Date(b._timestamp) - new Date(a._timestamp));
+}
+
+const getCachedHistory = withCache(fetchHistoryFromFirebase);
 
 const btnHistory = document.getElementById('view-history-btn');
 const historyContainer = document.getElementById('history-container');
@@ -169,16 +183,14 @@ if (btnHistory) {
         historyContainer.innerHTML = '<div class="history-message">Завантаження історії</div>';
 
         try {
-            const snapshot = await getDocs(collection(db, "flower_history"));
+            const historyData = await getCachedHistory();
             historyContainer.innerHTML = '';
 
-            if (snapshot.empty) {
+            if (historyData.length === 0) {
                 historyContainer.innerHTML = '<div class="history-message">Історія порожня</div>';
                 return;
             }
 
-            const historyData = [];
-            snapshot.forEach(doc => historyData.push(doc.data()));
             historyData.sort((a, b) => new Date(b._timestamp) - new Date(a._timestamp));
 
             historyData.forEach(data => {

@@ -1,9 +1,9 @@
 
-//проксі 
 import { db } from "../config/firebase-config.js";
 import { collection, addDoc } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 
+//проксі 
 export function createSecureApi(apiMethods, getCurrentUser) {
     return new Proxy(apiMethods, {
         get(target, property) {
